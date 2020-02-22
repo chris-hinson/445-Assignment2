@@ -138,7 +138,8 @@ public class ReallyLongInt 	extends LinkedListPlus<Integer>
 					total.add(carry);
 				}
 			}
-	    return total;
+		//shave off our leading zeros
+	    return new ReallyLongInt(total.toString());
 	}
 	
 	// Return new ReallyLongInt which is difference of current and argument
@@ -206,14 +207,14 @@ public class ReallyLongInt 	extends LinkedListPlus<Integer>
 				borrow_flag = true;
 			}
 
-			if (leftNode.data !=0) {
-				result.add(leftNode.data);
-			}
+
+			result.add(leftNode.data);
+
 			leftNode = leftNode.next;
 		}
 
-
-	    return result;
+		//shave off our leading zeros
+	    return new ReallyLongInt(result.toString());
 
 	}
 

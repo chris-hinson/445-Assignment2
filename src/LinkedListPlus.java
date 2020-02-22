@@ -193,6 +193,18 @@ public class LinkedListPlus<T> extends A2LList<T>
 	// or destroyed.
 	public void reverse()
 	{
-		firstNode = firstNode.prev;
+		Node curr = firstNode.next;
+		Node tail = curr.prev;
+		Node next;
+
+		for (int tCount = 1; tCount < numberOfEntries; tCount++) {
+			next = curr.next;
+			curr.next = tail;
+
+			tail = curr;
+			curr = next;
+		}
+
+		firstNode = tail;
 	}
 }
