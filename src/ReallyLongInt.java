@@ -3,7 +3,7 @@
 // complete the implementations of the remaining methods.  Also, for this class
 // to work, you must complete the implementation of the LinkedListPlus class.
 // See additional comments below.
-
+/*
 public class ReallyLongInt 	extends LinkedListPlus<Integer> 
 							implements Comparable<ReallyLongInt>
 {
@@ -96,3 +96,4 @@ public class ReallyLongInt 	extends LinkedListPlus<Integer>
 	}
 
 }
+*/

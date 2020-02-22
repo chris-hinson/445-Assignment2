@@ -79,28 +79,120 @@ public class LinkedListPlus<T> extends A2LList<T>
 	// Remove num items from the front of the list
 	public void leftShift(int num)
 	{
+
+		if (num <=0)
+		{
+
+		}
+		else if (num >= numberOfEntries)
+		{
+			clear();
+		}
+		else {
+			//define last node and disconnect it from front
+			Node rear = firstNode.prev;
+			rear.next = null;
+
+			//iterate to new front node
+			Node temp = firstNode;
+			for (int i = 0; i < num; i++) {
+				temp = temp.next;
+			}
+
+			//disconnect old front from rear
+			firstNode.prev = null;
+			//assign new front
+			firstNode = temp;
+
+			temp = firstNode.prev;
+			temp.next = null;
+
+			firstNode.prev = rear;
+			rear.next = firstNode;
+
+			numberOfEntries = numberOfEntries - num;
+		}
 	}
 
 	// Remove num items from the end of the list
 	public void rightShift(int num)
 	{
+		if (num <=0)
+		{
+
+		}
+		else if (num >= numberOfEntries)
+		{
+			clear();
+		}
+		else {
+			Node rear = firstNode.prev;
+
+			Node temp = rear;
+			for (int i = 0; i < num; i++) {
+				temp = temp.prev;
+			}
+			rear.next = null;
+			rear = temp;
+
+			temp = rear.next;
+			temp.prev = null;
+
+			firstNode.prev = rear;
+			rear.next = firstNode;
+
+			numberOfEntries = numberOfEntries - num;
+		}
 	}
 
 	// Rotate to the left num locations in the list.  No Nodes
 	// should be created or destroyed.
 	public void leftRotate(int num)
 	{
+		if(num < 0)
+		{
+			rightRotate(-num);
+		}
+		else
+		{
+			if (num > numberOfEntries)
+			{
+				num = num%numberOfEntries;
+			}
+
+			for (int i = 0;i<num;i++)
+			{
+				firstNode = firstNode.next;
+			}
+		}
 	}
 
 	// Rotate to the right num locations in the list.  No Nodes
 	// should be created or destroyed.
 	public void rightRotate(int num)
 	{
+		if(num < 0)
+		{
+			leftRotate(-num);
+		}
+		else
+		{
+			if (num > numberOfEntries)
+			{
+				num = num%numberOfEntries;
+			}
+
+			for (int i = 0;i<num;i++)
+			{
+				firstNode = firstNode.prev;
+			}
+		}
 	}
 	
 	// Reverse the nodes in the list.  No Nodes should be created
 	// or destroyed.
 	public void reverse()
 	{
+		firstNode = firstNode.prev;
 	}				
 }

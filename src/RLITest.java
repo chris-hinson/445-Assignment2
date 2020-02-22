@@ -10,7 +10,7 @@
 // If your output does not match mine, or if you must change this file to get
 // your code to work, you will lose credit, but you can still get PARTIAL
 // credit for your work, so be sure to turn something in no matter what!
-
+/*
 import java.util.*;
 
 public class RLITest
@@ -138,3 +138,4 @@ public class RLITest
 		
 	}
 }
+*/
