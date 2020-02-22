@@ -13,7 +13,7 @@ public class LinkedListPlus<T> extends A2LList<T>
 	{
 		super();
 	}
-	
+
 	// Copy constructor.  This is a "deepish" copy so it will make new
 	// Node objects for all of the nodes in the old list.  However, it
 	// is not totally deep since it does NOT make copies of the objects
@@ -33,7 +33,7 @@ public class LinkedListPlus<T> extends A2LList<T>
 			Node temp = oldList.firstNode;
 			Node newNode = new Node(temp.data);
 			firstNode = newNode;
-			
+
 			// Now we traverse the old list, appending a new Node with
 			// the correct data to the end of the new list for each Node
 			// in the old list.  Note how the loop is done and how the
@@ -53,7 +53,7 @@ public class LinkedListPlus<T> extends A2LList<T>
 			currNode.next = firstNode;  // currNode is now at the end of the list.
 			firstNode.prev = currNode;	// link to make the list circular
 			numberOfEntries = oldList.numberOfEntries;
-		}			
+		}
 	}
 
 	// Make a StringBuilder then traverse the nodes of the list, appending the
@@ -75,7 +75,7 @@ public class LinkedListPlus<T> extends A2LList<T>
 		}
 		return b.toString();
 	}
-	
+
 	// Remove num items from the front of the list
 	public void leftShift(int num)
 	{
@@ -188,11 +188,11 @@ public class LinkedListPlus<T> extends A2LList<T>
 			}
 		}
 	}
-	
+
 	// Reverse the nodes in the list.  No Nodes should be created
 	// or destroyed.
 	public void reverse()
 	{
 		firstNode = firstNode.prev;
-	}				
+	}
 }

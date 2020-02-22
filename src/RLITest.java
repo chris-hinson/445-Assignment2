@@ -32,16 +32,14 @@ public class RLITest
 		// Testing add method.
 		ReallyLongInt R3 = R1.add(R2);
 		System.out.println(R1 + " + " + R2 + " = " + R3);
-		R1 = new ReallyLongInt("6384536543");
-		R2 = new ReallyLongInt("123654");
+		R1 = new ReallyLongInt("1");
+		R2 = new ReallyLongInt("999999999999999");
 		R3 = R1.add(R2);
 		ReallyLongInt R4 = R2.add(R1);
 		System.out.println(R1 + " + " + R2 + " = " + R3);
 		System.out.println(R2 + " + " + R1 + " = " + R4);
 		System.out.println();
 
-
-		
 		// Testing subtract method
 		R1 = new ReallyLongInt("23456");
 		R2 = new ReallyLongInt("4567");
@@ -80,7 +78,7 @@ public class RLITest
 		ReallyLongInt R5 = new ReallyLongInt(R4);
 		System.out.println("Copy of " + R4.toString() + " = " + R5.toString());
 		System.out.println();
-		
+
 		// Testing compareTo
 		ReallyLongInt [] C = new ReallyLongInt[5];
 		C[0] = new ReallyLongInt("844444444444444");
@@ -137,6 +135,6 @@ public class RLITest
 		R1.multTenToThe(5);
 		System.out.println(R1);
 		System.out.println();
-		
+
 	}
 }

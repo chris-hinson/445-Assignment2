@@ -4,7 +4,7 @@
 // to work, you must complete the implementation of the LinkedListPlus class.
 // See additional comments below.
 
-public class ReallyLongInt 	extends LinkedListPlus<Integer> 
+public class ReallyLongInt 	extends LinkedListPlus<Integer>
 							implements Comparable<ReallyLongInt>
 {
 	private ReallyLongInt()
@@ -97,14 +97,13 @@ public class ReallyLongInt 	extends LinkedListPlus<Integer>
             shorter = new ReallyLongInt(rightOp);
         }
 
-	    if (longer.getLength() == shorter.getLength())
-		{
+	   //-----------------------------Same length code------------------------------------
 			Node longNode = longer.firstNode;
 			Node shortNode = shorter.firstNode;
 
 			int carry = 0;
 
-			for (int i = 0;i<numberOfEntries;i++)
+			for (int i = 0;i<shorter.getLength();i++)
 			{
 				int column = longNode.data+shortNode.data+carry;
 
@@ -118,59 +117,104 @@ public class ReallyLongInt 	extends LinkedListPlus<Integer>
 				longNode = longNode.next;
 				shortNode = shortNode.next;
 			}
-
-			if (carry>0)
-			{
-				total.add(carry);
-			}
-
-		}
-	    else
-		{
-			Node longNode = longer.firstNode;
-			Node shortNode = shorter.firstNode;
-
-			int carry = 0;
-
-			for (int i = 0;i<shorter.getLength();i++)
-			{
-				int column = longNode.data+shortNode.data+carry;
-				if (column >=10)
-				{carry = 1;
-					total.add((column-10)); }
-				else
-				{carry = 0;
-					total.add(column); }
-				longNode = longNode.next;
-				shortNode = shortNode.next;
-			}
-
+		//--------------------------------------------------------------------------------
+		//------------------------------unequal length code-------------------------------
 			int remainingColumns = longer.getLength()-shorter.getLength();
 
-			for (int i = 0;i<remainingColumns;i++)
-			{
-				int column = longNode.data+carry;
-				if (column >=10)
-				{carry = 1;
-					total.add((column-10)); }
-				else
-				{carry = 0;
-					total.add(column); }
-				longNode = longNode.next;
-				shortNode = shortNode.next;
+			if (remainingColumns >0) {
+				for (int i = 0; i < remainingColumns; i++) {
+					int column = longNode.data + carry;
+					if (column >= 10) {
+						carry = 1;
+						total.add((column - 10));
+					} else {
+						carry = 0;
+						total.add(column);
+					}
+					longNode = longNode.next;
+					shortNode = shortNode.next;
+				}
+				if (carry > 0) {
+					total.add(carry);
+				}
 			}
-			if (carry>0)
-			{
-				total.add(carry);
-			}
-		}
 	    return total;
 	}
 	
 	// Return new ReallyLongInt which is difference of current and argument
 	public ReallyLongInt subtract(ReallyLongInt rightOp)
-	{	
-	    return null;
+	{
+		//dont even bother subtracting if we'd end up with a negative number. Just throw an error
+	    if (this.compareTo(rightOp) < 0)
+		{
+			throw new ArithmeticException("Subtraction cannot result in a negative");
+		}
+
+	    //copy of leftOp to do mathematics on
+	    ReallyLongInt tempThis = new ReallyLongInt(this);
+
+	    //start at lowest significant number of both vars
+	    Node leftNode = tempThis.firstNode;
+		Node rightNode = rightOp.firstNode;
+
+		//carry flag
+		boolean borrow_flag=false;
+
+		//our result variable
+		ReallyLongInt result = new ReallyLongInt();
+
+		//iterate once for every digit in the rightOP
+		for (int i=0;i<rightOp.numberOfEntries;i++)
+		{
+			if (borrow_flag)
+			{
+				leftNode.data -=1;
+			}
+
+			if (leftNode.data >= rightNode.data) {
+				//just subtract
+				int column = leftNode.data - rightNode.data;
+				result.add(column);
+
+				borrow_flag = false;
+
+				leftNode = leftNode.next;
+				rightNode = rightNode.next;
+			} else {
+				leftNode.data += 10;
+				int column = leftNode.data - rightNode.data;
+				result.add(column);
+
+				borrow_flag = true;
+
+				leftNode = leftNode.next;
+				rightNode = rightNode.next;
+				}
+
+		}
+
+		int remainingColumns = tempThis.numberOfEntries-rightOp.numberOfEntries;
+		for (int i = 0;i<remainingColumns;i++)
+		{
+			if (borrow_flag&&(leftNode.data != 0))
+			{
+				leftNode.data -=1;
+			}
+			else if (borrow_flag&&(leftNode.data == 0))
+			{
+				leftNode.data=+9;
+				borrow_flag = true;
+			}
+
+			if (leftNode.data !=0) {
+				result.add(leftNode.data);
+			}
+			leftNode = leftNode.next;
+		}
+
+
+	    return result;
+
 	}
 
 	// Return -1 if current ReallyLongInt is less than rOp
@@ -247,11 +291,36 @@ public class ReallyLongInt 	extends LinkedListPlus<Integer>
 	// Mult. current ReallyLongInt by 10^num
 	public void multTenToThe(int num)
 	{
+		//special case for 0
+		if (firstNode.prev.data ==0)
+		{
+			return;
+		}
+
+		for (int i = 0; i< num; i++)
+		{
+			add(1,0);
+		}
+
 	}
 
 	// Divide current ReallyLongInt by 10^num
 	public void divTenToThe(int num)
 	{
+		//special case for 0
+		if (firstNode.prev.data ==0)
+		{
+			return;
+		}
+
+		if(num>this.numberOfEntries)
+		{
+			this.clear();
+			add(0);
+		}
+		else {
+			leftShift(num);
+		}
 	}
 
 }
