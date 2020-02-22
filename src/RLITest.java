@@ -10,7 +10,7 @@
 // If your output does not match mine, or if you must change this file to get
 // your code to work, you will lose credit, but you can still get PARTIAL
 // credit for your work, so be sure to turn something in no matter what!
-/*
+
 import java.util.*;
 
 public class RLITest
@@ -28,17 +28,19 @@ public class RLITest
 		System.out.println("leadZero1 = " + leadZero1.toString());
 		System.out.println("leadZero2 = " + leadZero2.toString());
 		System.out.println();
-		
+
 		// Testing add method.
 		ReallyLongInt R3 = R1.add(R2);
 		System.out.println(R1 + " + " + R2 + " = " + R3);
-		R1 = new ReallyLongInt("1");
-		R2 = new ReallyLongInt("999999999999999");
+		R1 = new ReallyLongInt("6384536543");
+		R2 = new ReallyLongInt("123654");
 		R3 = R1.add(R2);
 		ReallyLongInt R4 = R2.add(R1);
 		System.out.println(R1 + " + " + R2 + " = " + R3);
 		System.out.println(R2 + " + " + R1 + " = " + R4);
 		System.out.println();
+
+
 		
 		// Testing subtract method
 		R1 = new ReallyLongInt("23456");
@@ -138,4 +140,3 @@ public class RLITest
 		
 	}
 }
-*/

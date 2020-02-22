@@ -3,7 +3,7 @@
 // complete the implementations of the remaining methods.  Also, for this class
 // to work, you must complete the implementation of the LinkedListPlus class.
 // See additional comments below.
-/*
+
 public class ReallyLongInt 	extends LinkedListPlus<Integer> 
 							implements Comparable<ReallyLongInt>
 {
@@ -57,6 +57,17 @@ public class ReallyLongInt 	extends LinkedListPlus<Integer>
 	// override it to show the numbers in the way they should appear.
 	public String toString()
 	{
+	    StringBuilder out = new StringBuilder();
+	    Node temp = firstNode.prev;
+	    int length = getLength();
+
+	    for (int i = 0; i <length; i++)
+		{
+			out.append(temp.data);
+			temp = temp.prev;
+		}
+
+	    return out.toString();
 	}
 
 	// See notes in the Assignment sheet for the methods below.  Be sure to
@@ -66,11 +77,100 @@ public class ReallyLongInt 	extends LinkedListPlus<Integer>
 	// Return new ReallyLongInt which is sum of current and argument
 	public ReallyLongInt add(ReallyLongInt rightOp)
 	{
+	    ReallyLongInt longer;
+	    ReallyLongInt shorter;
+	    ReallyLongInt total = new ReallyLongInt();
+
+	    if (getLength()>rightOp.getLength())
+        {
+            longer = new ReallyLongInt(this);
+            shorter = new ReallyLongInt(rightOp);
+        }
+	    else if (getLength()<rightOp.getLength())
+        {
+            longer = new ReallyLongInt(rightOp);
+            shorter = new ReallyLongInt(this);
+        }
+	    else
+        {
+            longer = new ReallyLongInt(this);
+            shorter = new ReallyLongInt(rightOp);
+        }
+
+	    if (longer.getLength() == shorter.getLength())
+		{
+			Node longNode = longer.firstNode;
+			Node shortNode = shorter.firstNode;
+
+			int carry = 0;
+
+			for (int i = 0;i<numberOfEntries;i++)
+			{
+				int column = longNode.data+shortNode.data+carry;
+
+				if (column >=10)
+				{carry = 1;
+				 total.add((column-10)); }
+				else
+				{carry = 0;
+				 total.add(column); }
+
+				longNode = longNode.next;
+				shortNode = shortNode.next;
+			}
+
+			if (carry>0)
+			{
+				total.add(carry);
+			}
+
+		}
+	    else
+		{
+			Node longNode = longer.firstNode;
+			Node shortNode = shorter.firstNode;
+
+			int carry = 0;
+
+			for (int i = 0;i<shorter.getLength();i++)
+			{
+				int column = longNode.data+shortNode.data+carry;
+				if (column >=10)
+				{carry = 1;
+					total.add((column-10)); }
+				else
+				{carry = 0;
+					total.add(column); }
+				longNode = longNode.next;
+				shortNode = shortNode.next;
+			}
+
+			int remainingColumns = longer.getLength()-shorter.getLength();
+
+			for (int i = 0;i<remainingColumns;i++)
+			{
+				int column = longNode.data+carry;
+				if (column >=10)
+				{carry = 1;
+					total.add((column-10)); }
+				else
+				{carry = 0;
+					total.add(column); }
+				longNode = longNode.next;
+				shortNode = shortNode.next;
+			}
+			if (carry>0)
+			{
+				total.add(carry);
+			}
+		}
+	    return total;
 	}
 	
 	// Return new ReallyLongInt which is difference of current and argument
 	public ReallyLongInt subtract(ReallyLongInt rightOp)
 	{	
+	    return null;
 	}
 
 	// Return -1 if current ReallyLongInt is less than rOp
@@ -78,11 +178,70 @@ public class ReallyLongInt 	extends LinkedListPlus<Integer>
 	// Return 1 if current ReallyLongInt is greater than rOp
 	public int compareTo(ReallyLongInt rOp)
 	{
+		if (this.equals(rOp))
+		{
+			return 0;
+		}
+		else if (getLength() > rOp.getLength())
+		{
+			return 1;
+		}
+		else if (getLength() < rOp.getLength())
+		{
+			return -1;
+		}
+		else
+		{
+			Node thisNode = firstNode.prev;
+			Node thatNode = rOp.firstNode.prev;
+
+			for (int i =0;i<numberOfEntries;i++)
+			{
+				if (thisNode.data > thatNode.data)
+				{
+					return 1;
+				}
+				else if (thatNode.data > thisNode.data)
+				{
+					return -1;
+				}
+
+				thisNode = thisNode.prev;
+				thatNode = thatNode.prev;
+			}
+
+			//we should never reach this
+			return 999;
+		}
 	}
 
 	// Is current ReallyLongInt equal to rightOp?
 	public boolean equals(Object rightOp)
 	{
+		ReallyLongInt temp = (ReallyLongInt)rightOp;
+
+		if (getLength()!=temp.getLength() )
+		{
+			return false;
+		}
+		else
+		{
+			Node thisNode = firstNode;
+			Node thatNode = ((ReallyLongInt) rightOp).firstNode;
+
+			for (int i = 0; i < numberOfEntries; i++)
+			{
+				if (thisNode.getData().equals(thatNode.getData())) {
+
+					thisNode = thisNode.prev;
+					thatNode = thatNode.prev;
+
+				} else {
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 
 	// Mult. current ReallyLongInt by 10^num
@@ -96,4 +255,3 @@ public class ReallyLongInt 	extends LinkedListPlus<Integer>
 	}
 
 }
-*/
